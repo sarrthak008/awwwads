@@ -1,5 +1,20 @@
 @import "tailwindcss";
 
+@font-face {
+    font-family: space;
+    src: url("/fonts/space.otf");
+}
+
+@font-face {
+    font-family: normal;
+    src: url('/fonts/normal.ttf');
+}
+
 body{
     overflow-x: hidden;
+    font-family: normal;
+}
+
+.spcae{
+   font-family: space;
 }
