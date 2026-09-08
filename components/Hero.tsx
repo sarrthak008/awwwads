@@ -10,7 +10,7 @@ import 'lenis/dist/lenis.css'
 
 function Model({ scrollProgress }: { scrollProgress: React.MutableRefObject<number> }) {
   const group = useRef<THREE.Group>(null)
-  const { scene, animations } = useGLTF('/model/model.glb')
+  const { scene, animations } = useGLTF('/model/new.glb')
   const { actions, names } = useAnimations(animations, group)
 
   useEffect(() => {
