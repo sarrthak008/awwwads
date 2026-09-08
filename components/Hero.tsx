@@ -1,12 +1,46 @@
 'use client'
 
 import { Canvas, useFrame } from '@react-three/fiber'
-import { useGLTF, useAnimations } from '@react-three/drei'
+import { useGLTF, useAnimations, useProgress } from '@react-three/drei'
 import { EffectComposer, Bloom, SMAA, Vignette } from '@react-three/postprocessing'
-import { Suspense, useRef, useEffect } from 'react'
+import { Suspense, useRef, useEffect, useState } from 'react'
 import * as THREE from 'three'
 import Lenis from 'lenis'
 import 'lenis/dist/lenis.css'
+
+function MainLoader({ setLoading }: { setLoading: (loading: boolean) => void }) {
+  const { progress, active } = useProgress()
+  const [isVisible, setIsVisible] = useState(true)
+
+  useEffect(() => {
+    if (!active && progress === 100) {
+      const timer = setTimeout(() => {
+        setIsVisible(false)
+        setLoading(false)
+      }, 400)
+      return () => clearTimeout(timer)
+    }
+  }, [active, progress, setLoading])
+
+  if (!isVisible) return null
+
+  return (
+    <div 
+      className='h-screen w-screen fixed bg-black z-50 flex flex-col items-center justify-center text-white transition-opacity duration-500'
+      style={{ opacity: progress === 100 ? 0 : 1 }}
+    >
+      <div className="text-xl font-medium spcae tracking-wider mb-4">
+        LOADING {Math.round(progress)}%
+      </div>
+      <div className="w-48 h-1 bg-zinc-800 rounded-full overflow-hidden">
+        <div 
+          className="h-full bg-gray-500 transition-all duration-150 ease-out" 
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+    </div>
+  )
+}
 
 function Model({ scrollProgress }: { scrollProgress: React.MutableRefObject<number> }) {
   const group = useRef<THREE.Group>(null)
@@ -71,6 +105,7 @@ useGLTF.preload('/model/new.glb')
 
 export default function Hero() {
   const scrollProgress = useRef(0)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -79,7 +114,6 @@ export default function Hero() {
       smoothWheel: true,
     })
 
-    // Listen to Lenis scroll updates and update progress (0 to 1)
     lenis.on('scroll', (e) => {
       scrollProgress.current = e.progress
     })
@@ -98,6 +132,9 @@ export default function Hero() {
 
   return (
     <>
+      {/* 2. MainLoader sits over everything until the model flags complete */}
+      <MainLoader setLoading={setIsLoading} />
+
       {/* Spacer div to create page scroll height */}
       <div style={{ height: '300vh', width: '100%' }} />
 
