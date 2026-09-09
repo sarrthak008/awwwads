@@ -8,7 +8,7 @@ const NavBar = () => {
   const click = useAppSound({sound:"click"});
 
   return (
-    <div className='h-[12vh] px-4 py-2 fixed top-0 w-screen flex justify-around items-center text-white'>
+    <div className='h-[12vh] px-4 py-2 z-[11] fixed top-0 w-screen flex justify-around items-center text-white'>
       <div className='flex flex-col text-[14px]'>
         <div className='line-clamp-[-1]'>
           <span><span className='w-[20px] inline-block h-[10px] bg-orange-400'></span> S</span>arthak
