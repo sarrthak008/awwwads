@@ -1,7 +1,8 @@
 import useSound from "use-sound";
 
+type soundName = "click"
 
-const useAppSound = ({ sound }:{sound:string}) => {
+const useAppSound = ({ sound }:{sound:soundName}) => {
     const [clickplay] = useSound('/sounds/oneClick.wav')
 
     switch (sound) {
@@ -9,7 +10,7 @@ const useAppSound = ({ sound }:{sound:string}) => {
             return (clickplay)
 
         default:
-            break
+           return (clickplay)
     }
 }
 
