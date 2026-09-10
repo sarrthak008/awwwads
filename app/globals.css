@@ -14,8 +14,18 @@
 body{
     overflow-x: hidden;
     font-family: normal;
+    height: 100%;
+    width: 100%;
 }
 
 .space{
    font-family: space;
+}
+
+.text-gray-gradient{
+    background:linear-gradient(to right, white,white,rgb(15, 15, 15));
+   -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
 }

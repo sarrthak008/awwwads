@@ -9,7 +9,7 @@ const page = () => {
     <div className='w-screen relative'>
       <NavBar/>
       <Hero/>
-        <div className='absolute top-0'>
+        <div className='absolute h-full w-full top-0'>
            <HeroText/>
         </div>
       <SettingPannel/>
